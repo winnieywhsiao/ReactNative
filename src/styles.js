@@ -73,6 +73,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 10,
   },
+  loading: {
+    flex:1,
+    flexDirection:"row",
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 });
 
 export default styles;
