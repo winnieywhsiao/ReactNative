@@ -3,17 +3,30 @@ import {FlatList, View, Text, ActivityIndicator} from 'react-native';
 import {Icon, Fab} from 'native-base';
 import axios from 'axios';
 
+import PersonAdd from './PersonAdd';
 import styles from '../styles';
+import {axios_config, url} from './config';
 
 export default function PersonList() {
-  const axios_config = {
-     headers: {'Authorization': 'Bearer key5hoPQlXIf5ig6M'}
-    };
-
-  const list_url="https://api.airtable.com/v0/app01RLxJzljyl9e3/Table%201?maxRecords=3&view=Grid%20view";
+  const get_url = url+"?maxRecords=50&view=Grid%20view";
 
   const [persons, setPersons] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  async function fetchData () {
+      const result = await axios.get(get_url,axios_config);
+      setPersons(result.data.records);
+      setIsLoading(!isLoading);
+  }
+
+  useEffect(() => {
+    fetchData();
+  },[modalVisible]);
+
+  function update(){
+    setModalVisible(false);
+  }
 
   const renderItem = ({ item, index }) => (
     <View style={styles.item}>
@@ -23,16 +36,6 @@ export default function PersonList() {
       <Text>{item.fields.Age}</Text>
     </View>
   );
-
-  async function fetchData () {
-      const result = await axios.get(list_url,axios_config);
-      setPersons(result.data.records);
-      setIsLoading(!isLoading);
-  }
-
-  useEffect(() => {
-    fetchData();
-  },[]);
 
   return (
   <View style={styles.container}>
@@ -49,6 +52,10 @@ export default function PersonList() {
         >
       </FlatList>
     }
+    <Fab onPress={()=>setModalVisible(true)}>
+      <Icon ios='ios-add' android="md-add"/>
+    </Fab>
+    <PersonAdd modalVisible = {modalVisible} update={update}/>
   </View>
  );
 }
