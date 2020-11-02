@@ -11,7 +11,7 @@ function HomeScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Button
-        onPress={() => navigation.navigate('Notifications')}
+        onPress={() => navigation.navigate('備忘錄')}
         title="Go to lists"
       />
     </View>

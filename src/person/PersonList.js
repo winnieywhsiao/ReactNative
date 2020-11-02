@@ -79,13 +79,12 @@ export default function PersonList() {
 
   return (
   <View style={styles.container}>
-    {isLoading &&
-      <View style={styles.loading}>
+    {isLoading
+      ?<View style={styles.loading}>
        <ActivityIndicator color="red" size="large" animating={isLoading} />
       </View>
-    }
-    {!isLoading &&
-      <FlatList 
+    
+      :<FlatList 
         data={persons} 
         renderItem = {renderItem}
         keyExtractor={(item, index) => ""+index}
