@@ -5,6 +5,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import ProductList from "./src/product/ProductList";
 import PersonList from "./src/person/PersonList";
+import MemoList from "./src/memo/MemoList";
 
 function HomeScreen({ navigation }) {
   return (
@@ -35,6 +36,7 @@ export default function App() {
         <Drawer.Screen name="ProductList" component={ProductList} />
         <Drawer.Screen name="PersonList" component={PersonList} />
         <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+        <Drawer.Screen name="備忘錄" component={MemoList} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

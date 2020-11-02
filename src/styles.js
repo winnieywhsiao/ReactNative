@@ -26,12 +26,14 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
+
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 22,
   },
+
   modalView: {
     margin: 60,
     backgroundColor: "white",
@@ -47,6 +49,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+
   addButton: {
     backgroundColor: "#4897C9",
     borderRadius: 20,
@@ -78,7 +81,12 @@ const styles = StyleSheet.create({
     flexDirection:"row",
     alignItems: 'center',
     justifyContent: 'center'
-  }
+  },
+  memocontainer: {
+    flex: 1,
+    flexDirection: "row",
+    marginTop: StatusBar.currentHeight || 0,
+  },
 });
 
 export default styles;
