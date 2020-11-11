@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState } from "react";
 import styles from "../styles";
 import ProductAdd from "./ProductAdd";
 
@@ -13,20 +13,42 @@ import {
   Alert,
   Modal,
   TouchableHighlight,
-  ActivityIndicator,
 } from "react-native";
+
 import { Icon, Fab } from "native-base";
 
-import * as firebase from 'firebase';
-import firestore from 'firebase/firestore';
-import * as FirebaseCore from 'expo-firebase-core';
-// import {config} from './firebase_config';
+/*
+const data = [
+  {
+    name: "iPhone 7",
+    price: 12000,
+    category: "phone",
+    inventory: 1000,
+    safetyStock: 100,
+  },
+  {
+    name: "iPhone 8",
+    price: 10000,
+    category: "phone",
+    inventory: 900,
+    safetyStock: 100,
+  },
+  {
+    name: "iPhone X",
+    price: 20000,
+    category: "phone",
+    inventory: 1000,
+    safetyStock: 100,
+  },
+];
+*/
 
 export default function ProductList() {
-
   const [selected, setSelected] = useState(null); //必須要放 function 裡面
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [products, setProducts] = useState([
+    { desc: "iPad", price: 20000 },
+    { desc: "iPhone X", price: 30000 },
+  ]);
   const [modalVisible, setModalVisible] = useState(false);
 
   const renderItem = ({ item, index }) => {
@@ -44,54 +66,19 @@ export default function ProductList() {
     );
   };
 
-  function hide(){
-    setSelectedId("");
-    setModalVisible(false);
-  }
-
-  if (!firebase.apps.length) {
-    firebase.initializeApp(FirebaseCore.DEFAULT_WEB_APP_OPTIONS);
-  }
-  const db = firebase.firestore();
-
-  async function readData(){
-    const newProducts=[];
-    try {
-      const querySnapshot = await db.collection("product").get();
-      querySnapshot.forEach((doc) => {
-        const newProduct = {
-          desc:doc.data().desc,
-          price:doc.data().price
-        }
-        newProducts.push(newProduct);
-      });//foreach
-       setProducts(newProducts);
-       setIsLoading(false);
-    }
-    catch(e){console.log(e);}
-  }//readData
-
-  useEffect(()=>{
-    readData();
-  },[modalVisible]);
-
   function update(newProduct) {
-    setModalVisible(false);
+    // setState 可以給 value 或 callback function
+    setProducts((oldProducts) => [...oldProducts, newProduct]); //此為一個callback function
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      {isLoading ?
-        <View style={styles.loading}>
-          <ActivityIndicator color="red" size="large" animating={isLoading} />
-        </View>
-        :
-        <FlatList
-          data={products}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.desc}
-        ></FlatList>
-      }
+      <FlatList
+        data={products}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.desc}
+      ></FlatList>
+
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>

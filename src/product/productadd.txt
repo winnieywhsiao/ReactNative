@@ -5,43 +5,15 @@ import {
   View,
   TouchableHighlight,
   Text,
-  Modal,
 } from "react-native";
 import styles from "../styles";
-
-import * as firebase from 'firebase';
-import firestore from 'firebase/firestore';
-import * as FirebaseCore from 'expo-firebase-core';
 
 export default function ProductAdd(props) {
   const [desc, setDesc] = useState("");
   const [price, setPrice] = useState("");
 
-  if (!firebase.apps.length) {
-    firebase.initializeApp(FirebaseCore.DEFAULT_WEB_APP_OPTIONS);
-  }
-  const db = firebase.firestore();
-
-  async function update() {
-    try {
-      const docRef = await db.collection("product").add({
-        desc: desc,
-        price: parseInt(price)
-      });
-      console.log(docRef.id);
-      setDesc("");
-      setPrice("");
-      props.update();
-    }
-    catch(error) {
-      console.error("Error adding document: ", error);
-    }
-  }
-
-  function cancel(){
-    setDesc("");
-    setPrice("");
-    props.update();
+  function update() {
+    props.update({ desc, price });
   }
 
   return (
@@ -52,6 +24,7 @@ export default function ProductAdd(props) {
         value={desc}
         onChangeText={(text) => setDesc(text)}
       />
+
       <TextInput
         placeholder="價格"
         style={styles.inputStyle}

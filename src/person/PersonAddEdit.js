@@ -36,14 +36,28 @@ export default function ProductAdd(props) {
       try {
       // if id exists, call put, else call post      
       const result = props.id
-        ?await axios.put(url,newPerson, axios_config)
-        :await axios.post(url,newPerson, axios_config);
+        ?await axios.put(url, newPerson, axios_config)
+        :await axios.post(url, newPerson, axios_config);
       props.hide();}
       catch (e){
         console.log("error:"+e);
       }
     }
     sendData();
+  }
+
+  function remove() {
+    async function deleteData () {
+      const removeid = props.id;
+      console.log(props.id);
+      try {  
+        const result = await axios.delete(url, removeid, axios_config);
+      }
+      catch (e){
+        console.log("error:"+e);
+      }
+    }
+    deleteData();
   }
 
   return (
@@ -53,6 +67,7 @@ export default function ProductAdd(props) {
       <TextInput placeholder="年齡" value={age} onChangeText={text=>setAge(text)}/>
       <Button onPress={update} title="確定"/>
       <Button onPress={props.hide} title="取消"/>
+      <Button onPress={remove} title="刪除"/>
     </Modal>
   );
 }
