@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {FlatList, View, Text, ActivityIndicator, TouchableOpacity} from 'react-native';
 import {Icon, Fab} from 'native-base';
 import axios from 'axios';
 
 // import PersonAdd from './PersonAdd';
 import PersonAddEdit from './PersonAddEdit';
+import {AuthContext} from '../account/AuthContext';
 import styles from '../styles';
 import {axios_config, url} from './config';
 
@@ -16,6 +17,8 @@ export default function PersonList() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedId, setSelectedId] = useState(null);
 
+  const authContext = useContext(AuthContext);
+
   const [person, setPerson] = useState({
     Name:"",
     City:"",
@@ -24,6 +27,8 @@ export default function PersonList() {
 
   useEffect(() => {
     async function fetchData () {
+      console.log("isSignedIn in PersonList:" + authContext.isSignedIn);
+      
       const result = await axios.get(get_url, axios_config);
       setPersons(result.data.records);
       setIsLoading(!isLoading);
