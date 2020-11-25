@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Button, View, Text } from 'react-native';
 import * as firebase from 'firebase';
 import * as FirebaseCore from 'expo-firebase-core';
+
+import {AuthContext} from '../account/AuthContext';
 import styles from '../styles';
 
 export default function SignOut() {
@@ -10,6 +12,7 @@ export default function SignOut() {
   }
 
   const [message, setMessage] = useState("");
+  const authContext = useContext(AuthContext);
 
   async function signOut(){
     try{
@@ -17,6 +20,7 @@ export default function SignOut() {
         .then((res) => {
           console.log('User signed out successfully!'); 
       })
+      authContext.setStatus(false);
     }
     catch(error){
       setMessage(error.message);

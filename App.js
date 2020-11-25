@@ -5,11 +5,12 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import SignIn from './src/account/SignIn';
 import SignUp from './src/account/SignUp';
-// import SignOut from './src/account/SignOut';
+import SignOut from './src/account/SignOut';
 import {AuthContext} from './src/account/AuthContext';
 import ProductList from "./src/product/ProductList";
 import PersonList from "./src/person/PersonList";
 import MemoList from "./src/memo/MemoList";
+import ImageUpload from './src/storage/ImageUpload';
 
 function HomeScreen({ navigation }) {
   return (
@@ -46,6 +47,8 @@ export default function App() {
             <Drawer.Screen name="PersonList" component={PersonList} />
             <Drawer.Screen name="Notifications" component={NotificationsScreen} />
             <Drawer.Screen name="備忘錄" component={MemoList} />
+            <Drawer.Screen name="Image" component={ImageUpload} />
+            <Drawer.Screen name="登出" component={SignOut} />
             </>
           )
           :(

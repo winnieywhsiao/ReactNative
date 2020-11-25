@@ -102,6 +102,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: StatusBar.currentHeight || 0,
   },
+  logo: {
+    width: 305,
+    height: 159,
+    marginBottom: 20,
+  },
 });
 
 export default styles;
