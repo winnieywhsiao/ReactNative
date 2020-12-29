@@ -11,6 +11,14 @@ import ProductList from "./src/product/ProductList";
 import PersonList from "./src/person/PersonList";
 import MemoList from "./src/memo/MemoList";
 import ImageUpload from './src/storage/ImageUpload';
+import TodoList from './src/component/TodoList';
+
+import { createStore } from 'redux'
+import { Provider } from 'react-redux';
+import reducer from './src/store/reducer'
+
+
+const store = createStore(reducer)
 
 function HomeScreen({ navigation }) {
   return (
@@ -37,29 +45,33 @@ export default function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
 
   return (
-    <NavigationContainer>
-      <AuthContext.Provider value={{isSignedIn: isSignedIn, setStatus:setIsSignedIn}}>
-        <Drawer.Navigator initialRouteName="登入">
-          {isSignedIn?(
-            <>
-            <Drawer.Screen name="Home" component={HomeScreen} />
-            <Drawer.Screen name="ProductList" component={ProductList} />
-            <Drawer.Screen name="PersonList" component={PersonList} />
-            <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-            <Drawer.Screen name="備忘錄" component={MemoList} />
-            <Drawer.Screen name="Image" component={ImageUpload} />
-            <Drawer.Screen name="登出" component={SignOut} />
-            </>
-          )
-          :(
-            <>
-            <Drawer.Screen name="登入" component={SignIn} />
-            <Drawer.Screen name="註冊" component={SignUp} />
-            </>
-          )
-          }
-        </Drawer.Navigator>
-      </AuthContext.Provider>
-    </NavigationContainer>
+    // Provider管理store
+    <Provider store={store}>
+      <NavigationContainer>
+        <AuthContext.Provider value={{isSignedIn: isSignedIn, setStatus:setIsSignedIn}}>
+          <Drawer.Navigator initialRouteName="登入">
+            {isSignedIn?(
+              <>
+              <Drawer.Screen name="Home" component={HomeScreen} />
+              <Drawer.Screen name="ProductList" component={ProductList} />
+              <Drawer.Screen name="PersonList" component={PersonList} />
+              <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+              <Drawer.Screen name="備忘錄" component={MemoList} />
+              <Drawer.Screen name="Image" component={ImageUpload} />
+              <Drawer.Screen name="登出" component={SignOut} />
+              </>
+            )
+            :(
+              <>
+              {/* <Drawer.Screen name="登入" component={SignIn} />
+              <Drawer.Screen name="註冊" component={SignUp} /> */}
+              <Drawer.Screen name="TodoList" component={TodoList} />
+              </>
+            )
+            }
+          </Drawer.Navigator>
+        </AuthContext.Provider>
+      </NavigationContainer>
+    </Provider>
   );
 }
