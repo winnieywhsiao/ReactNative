@@ -75,7 +75,7 @@ export default function ProductList() {
     readData();
   },[modalVisible]);
 
-  function update(newProduct) {
+  function hide() {
     setModalVisible(false);
   }
 
@@ -92,26 +92,15 @@ export default function ProductList() {
           keyExtractor={(item) => item.desc}
         ></FlatList>
       }
-      <Modal animationType="slide" transparent={true} visible={modalVisible}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <ProductAdd update={update} />
-
-            <TouchableHighlight
-              style={styles.hideButton}
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </TouchableHighlight>
-          </View>
-        </View>
-      </Modal>
-
+      
       <Fab onPress={() => setModalVisible(true)}>
         <Icon ios="ios-add" android="md-add" />
       </Fab>
+
+      <ProductAdd 
+        hide={hide}
+        modalVisible={modalVisible}
+      />
     </SafeAreaView>
   );
 }

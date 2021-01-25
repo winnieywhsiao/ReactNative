@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Button, View } from 'react-native';
+import { Button, View, LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
@@ -9,7 +9,6 @@ import SignOut from './src/account/SignOut';
 import {AuthContext} from './src/account/AuthContext';
 import ProductList from "./src/product/ProductList";
 import PersonList from "./src/person/PersonList";
-import MemoList from "./src/memo/MemoList";
 import ImageUpload from './src/storage/ImageUpload';
 import TodoList from './src/component/TodoList';
 
@@ -42,6 +41,7 @@ function NotificationsScreen({ navigation }) {
 const Drawer = createDrawerNavigator();
 
 export default function App() {
+  LogBox.ignoreLogs(["Setting a timer"]);
   const [isSignedIn, setIsSignedIn] = useState(false);
 
   return (
@@ -56,7 +56,6 @@ export default function App() {
               <Drawer.Screen name="ProductList" component={ProductList} />
               <Drawer.Screen name="PersonList" component={PersonList} />
               <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-              <Drawer.Screen name="備忘錄" component={MemoList} />
               <Drawer.Screen name="Image" component={ImageUpload} />
               <Drawer.Screen name="登出" component={SignOut} />
               </>
@@ -65,7 +64,8 @@ export default function App() {
               <>
               {/* <Drawer.Screen name="登入" component={SignIn} />
               <Drawer.Screen name="註冊" component={SignUp} /> */}
-              <Drawer.Screen name="TodoList" component={TodoList} />
+              <Drawer.Screen name="ProductList" component={ProductList} />
+              {/* <Drawer.Screen name="TodoList" component={TodoList} /> */}
               </>
             )
             }

@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   Text,
   Modal,
+  SafeAreaView,
 } from "react-native";
 import styles from "../styles";
 
@@ -22,7 +23,7 @@ export default function ProductAdd(props) {
   }
   const db = firebase.firestore();
 
-  async function update() {
+  async function add() {
     try {
       const docRef = await db.collection("product").add({
         desc: desc,
@@ -31,7 +32,7 @@ export default function ProductAdd(props) {
       console.log(docRef.id);
       setDesc("");
       setPrice("");
-      props.update();
+      props.hide();
     }
     catch(error) {
       console.error("Error adding document: ", error);
@@ -41,30 +42,44 @@ export default function ProductAdd(props) {
   function cancel(){
     setDesc("");
     setPrice("");
-    props.update();
+    props.hide();
   }
 
   return (
-    <View style={styles.modalText}>
-      <TextInput
-        placeholder="產品說明"
-        style={styles.inputStyle}
-        value={desc}
-        onChangeText={(text) => setDesc(text)}
-      />
-      <TextInput
-        placeholder="價格"
-        style={styles.inputStyle}
-        value={price}
-        onChangeText={(text) => setPrice(text)}
-      />
+    <SafeAreaView >
+      <Modal animationType="slide" transparent={true} visible={props.modalVisible}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.modalText}>
+              <TextInput
+                placeholder="產品說明"
+                style={styles.inputStyle}
+                value={desc}
+                onChangeText={(text) => setDesc(text)}
+              />
+              <TextInput
+                placeholder="價格"
+                style={styles.inputStyle}
+                value={price}
+                onChangeText={(text) => setPrice(text)}
+              />
 
-      <TouchableHighlight
-        style={styles.addButton}
-        onPress={update}
-      >
-        <Text style={styles.textStyle}>新增</Text>
-      </TouchableHighlight>
-    </View>
+              <TouchableHighlight
+                style={styles.addButton}
+                onPress={add}
+              >
+                <Text style={styles.textStyle}>新增</Text>
+              </TouchableHighlight>
+            </View>
+            <TouchableHighlight
+              style={styles.hideButton}
+              onPress={cancel}
+            >
+              <Text style={styles.textStyle}>Hide Modal</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
+    </SafeAreaView>
   );
 }
