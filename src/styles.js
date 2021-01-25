@@ -55,12 +55,21 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
+    width:100,
   },
   hideButton: {
     backgroundColor: "#A7D7F5",
     borderRadius: 20,
     padding: 10,
     elevation: 2,
+    width:100,
+  },
+  deleteButton: {
+    backgroundColor: "#F0423C",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    width:100,
   },
   textStyle: {
     color: "white",
